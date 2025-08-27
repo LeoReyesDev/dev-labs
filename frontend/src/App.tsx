@@ -1,71 +1,151 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import LoanTable, { Loan } from "./components/LoanTable";
 
-const API = 'http://localhost:3001/loan';
+const LOCAL_STORAGE_KEY = "loans";
+
+// Default list of 5 loan objects
+const defaultLoans: Loan[] = [
+  {
+    id: 1,
+    name: "Loan Alpha",
+    borrower: "Alice",
+    lender: "Bank A",
+    amount: 5000,
+    status: "Pending",
+  },
+  {
+    id: 2,
+    name: "Loan Beta",
+    borrower: "Bob",
+    lender: "Bank B",
+    amount: 7500,
+    status: "Signed",
+  },
+  {
+    id: 3,
+    name: "Loan Gamma",
+    borrower: "Charlie",
+    lender: "Bank C",
+    amount: 2000,
+    status: "Settled",
+  },
+  {
+    id: 4,
+    name: "Loan Delta",
+    borrower: "Diana",
+    lender: "Bank D",
+    amount: 10000,
+    status: "Pending",
+  },
+  {
+    id: 5,
+    name: "Loan Epsilon",
+    borrower: "Evan",
+    lender: "Bank E",
+    amount: 3200,
+    status: "Signed",
+  },
+];
 
 function App() {
-  const [loans, setLoans] = useState<any[]>([]);
-  const [form, setForm] = useState({ name: '', borrower: '', lender: '', amount: '' });
-
-  const fetchLoans = async () => {
-    const res = await axios.get(API);
-    setLoans(res.data);
-  };
-
-  const createLoan = async () => {
-    await axios.post(API, { ...form, amount: parseFloat(form.amount) });
-    fetchLoans();
-  };
-
-  const updateStatus = async (id: number, action: 'sign' | 'settle') => {
-    await axios.post(\`\${API}/\${id}/\${action}\`);
-    fetchLoans();
-  };
+  const [loans, setLoans] = useState<Loan[]>([]);
+  const [form, setForm] = useState({
+    name: "",
+    borrower: "",
+    lender: "",
+    amount: "",
+  });
 
   useEffect(() => {
-    fetchLoans();
+    const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
+    if (stored) {
+      console.log("Loaded from localStorage");
+      setLoans(JSON.parse(stored));
+    } else {
+      console.log("Seeding localStorage with default loans");
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(defaultLoans));
+      setLoans(defaultLoans);
+    }
   }, []);
 
+  useEffect(() => {
+    // Avoid storing empty array on first mount
+    if (loans.length > 0) {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(loans));
+    }
+  }, [loans]);
+
+  const createLoan = () => {
+    const { name, borrower, lender, amount } = form;
+    if (!name || !borrower || !lender || !amount) {
+      alert("All fields are required");
+      return;
+    }
+
+    const newLoan: Loan = {
+      id: Date.now(),
+      name,
+      borrower,
+      lender,
+      amount: parseFloat(amount),
+      status: "Pending",
+    };
+
+    setLoans((prev) => [...prev, newLoan]);
+    setForm({ name: "", borrower: "", lender: "", amount: "" });
+  };
+
+  const updateLoanStatus = (id: number, action: "sign" | "settle") => {
+    const updated = loans.map((loan) =>
+      loan.id === id
+        ? { ...loan, status: action === "sign" ? "Signed" : "Settled" }
+        : loan
+    );
+    setLoans(updated);
+  };
+
   return (
-    <div className="p-8 font-sans max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">📄 SyndiChain Dashboard</h1>
-      <div className="mb-4 space-y-2">
-        <input className="border p-2 w-full" placeholder="Loan Name" onChange={e => setForm({ ...form, name: e.target.value })} />
-        <input className="border p-2 w-full" placeholder="Borrower" onChange={e => setForm({ ...form, borrower: e.target.value })} />
-        <input className="border p-2 w-full" placeholder="Lender" onChange={e => setForm({ ...form, lender: e.target.value })} />
-        <input className="border p-2 w-full" placeholder="Amount" type="number" onChange={e => setForm({ ...form, amount: e.target.value })} />
-        <button className="bg-blue-600 text-white px-4 py-2 rounded" onClick={createLoan}>Create Loan</button>
+    <div className="p-8 font-sans max-w-4xl mx-auto">
+      <h1 className="text-3xl font-bold mb-6">📄 SyndiChain Dashboard</h1>
+
+      {/* Form to create loan */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+        <input
+          className="border p-2"
+          placeholder="Loan Name"
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+        />
+        <input
+          className="border p-2"
+          placeholder="Borrower"
+          value={form.borrower}
+          onChange={(e) => setForm({ ...form, borrower: e.target.value })}
+        />
+        <input
+          className="border p-2"
+          placeholder="Lender"
+          value={form.lender}
+          onChange={(e) => setForm({ ...form, lender: e.target.value })}
+        />
+        <input
+          className="border p-2"
+          placeholder="Amount"
+          type="number"
+          value={form.amount}
+          onChange={(e) => setForm({ ...form, amount: e.target.value })}
+        />
       </div>
 
-      <table className="w-full border mt-6">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border p-2">ID</th>
-            <th className="border p-2">Name</th>
-            <th className="border p-2">Borrower</th>
-            <th className="border p-2">Lender</th>
-            <th className="border p-2">Amount</th>
-            <th className="border p-2">Status</th>
-            <th className="border p-2">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {loans.map((loan) => (
-            <tr key={loan.id} className="text-center">
-              <td className="border p-2">{loan.id}</td>
-              <td className="border p-2">{loan.name}</td>
-              <td className="border p-2">{loan.borrower}</td>
-              <td className="border p-2">{loan.lender}</td>
-              <td className="border p-2">${loan.amount.toLocaleString()}</td>
-              <td className="border p-2">{loan.status}</td>
-              <td className="border p-2 space-x-2">
-                {loan.status === 'Pending' && <button className="bg-yellow-500 px-2 py-1 text-white" onClick={() => updateStatus(loan.id, 'sign')}>Sign</button>}
-                {loan.status === 'Signed' && <button className="bg-green-600 px-2 py-1 text-white" onClick={() => updateStatus(loan.id, 'settle')}>Settle</button>}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <button
+        className="bg-blue-600 text-white px-4 py-2 rounded mb-6"
+        onClick={createLoan}
+      >
+        ➕ Create Loan
+      </button>
+
+      {/* Loan Table */}
+      <LoanTable loans={loans} onAction={updateLoanStatus} />
     </div>
   );
 }

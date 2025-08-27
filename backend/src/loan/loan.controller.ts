@@ -1,28 +1,28 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
-import { LoanService } from './loan.service';
-import { CreateLoanDto } from './dto/create-loan.dto';
+import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { LoanService } from "./loan.service";
+import { CreateLoanDto } from "./dto/create-loan.dto";
 
-@Controller('loan')
+@Controller("loan")
 export class LoanController {
   constructor(private readonly loanService: LoanService) {}
 
   @Get()
-  findAll() {
+  findAll(): any {
     return this.loanService.findAll();
   }
 
   @Post()
-  create(@Body() createLoanDto: CreateLoanDto) {
+  create(@Body() createLoanDto: CreateLoanDto): any {
     return this.loanService.create(createLoanDto);
   }
 
-  @Post(':id/sign')
-  sign(@Param('id') id: string) {
+  @Post(":id/sign")
+  sign(@Param("id") id: string): any {
     return this.loanService.sign(+id);
   }
 
-  @Post(':id/settle')
-  settle(@Param('id') id: string) {
+  @Post(":id/settle")
+  settle(@Param("id") id: string): any {
     return this.loanService.settle(+id);
   }
 }

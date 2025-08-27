@@ -1,15 +1,15 @@
-import { IsString, IsNumber } from 'class-validator';
+import { IsString, IsNumber } from "class-validator";
 
 export class CreateLoanDto {
   @IsString()
-  name: string;
+  name!: string;
 
   @IsString()
-  borrower: string;
+  borrower!: string;
 
   @IsString()
-  lender: string;
+  lender!: string;
 
   @IsNumber()
-  amount: number;
+  amount!: number;
 }
