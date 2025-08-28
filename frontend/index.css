@@ -7,3 +7,8 @@ body {
   background-color: #f9f9f9;
   color: #111;
 }
+
+/* Optional custom class */
+.input {
+  @apply border rounded p-2 w-full dark:bg-gray-800 dark:text-white dark:border-gray-600;
+}
