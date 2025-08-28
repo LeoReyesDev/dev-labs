@@ -3,9 +3,7 @@
 @tailwind utilities;
 
 body {
-  font-family: system-ui, sans-serif;
-  background-color: #f9f9f9;
-  color: #111;
+  @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-white transition-colors duration-300;
 }
 
 /* Optional custom class */
