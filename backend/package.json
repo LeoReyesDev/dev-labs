@@ -4,7 +4,7 @@
   "description": "NestJS backend for SyndiChain loan tracker",
   "main": "dist/main.js",
   "scripts": {
-    "start": "nest start",
+    "start": "node dist/main.js",
     "start:dev": "nest start --watch",
     "build": "nest build"
   },
