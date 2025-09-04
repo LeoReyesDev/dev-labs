@@ -1,5 +1,3 @@
----
-
 ## 🛠️ Tech Stack
 
 ### Backend
@@ -17,8 +15,6 @@
 ### Dev Tools
 - [Concurrently](https://www.npmjs.com/package/concurrently) to run frontend & backend together
 - Node.js (>= 18.x recommended)
-
----
 
 ## 🚀 Getting Started
 
