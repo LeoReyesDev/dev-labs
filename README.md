@@ -25,3 +25,4 @@ git clone https://github.com/leoreyesdev/dev-labs.git
 cd dev-labs
 git checkout contracts-api
 ```
+![Smart Contracts Demo](./assets/Smart-Contracts.gif)
