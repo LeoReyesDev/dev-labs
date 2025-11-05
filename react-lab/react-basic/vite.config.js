@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [react()],
   server: {
     host: "0.0.0.0", // Listen on all interfaces
-    port: 5174,
+    port: 5175,
     strictPort: true,
     cors: true,
     allowedHosts: [
@@ -18,7 +18,7 @@ export default defineConfig({
       ".codesandbox.io",
     ],
     // ✅ fallback: dynamically accept any origin at runtime
-    origin: "http://localhost:5173",
+    origin: "http://localhost:5175",
     hmr: {
       clientPort: 443, // force secure WebSocket for HTTPS preview
       host: "localhost",

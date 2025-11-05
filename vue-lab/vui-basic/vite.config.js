@@ -5,19 +5,15 @@ export default defineConfig({
   plugins: [vue()],
   server: {
     host: "0.0.0.0",
-    port: 5173,
+    port: 5174, // or 5175 depending on your setup
     strictPort: true,
     cors: true,
     allowedHosts: [
       "localhost",
       "127.0.0.1",
       "0.0.0.0",
-      ".csb.app",
-      ".codesandbox.io"
+      ".codesandbox.io",
+      ".csb.app" // 👈 this wildcard allows ANY sandbox hostname
     ],
-    hmr: {
-      host: process.env.CODESANDBOX_HOST || "localhost",
-      protocol: "wss", // force secure WebSocket for HTTPS preview
-    }
-  }
+  },
 });

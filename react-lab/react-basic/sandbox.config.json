@@ -1,0 +1,8 @@
+{
+  "template": "react",
+  "container": { "port": 5175 },
+  "tasks": {
+    "setup": "npm install",
+    "start": "npm run dev"
+  }
+}

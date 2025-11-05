@@ -1,0 +1,18 @@
+{
+  "template": "php",
+  "container": {
+    "port": 8000
+  },
+  "tasks": {
+    "setup": "",
+    "start": "php -S 0.0.0.0:8000 -t php-start"
+  },
+  "ports": {
+    "8000": {
+      "visibility": "public",
+      "protocol": "https",
+      "description": "PHP Server",
+      "onOpen": "open-preview"
+    }
+  }
+}

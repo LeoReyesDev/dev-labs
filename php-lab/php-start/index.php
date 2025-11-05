@@ -1,0 +1,1 @@
+<?php echo "Hello World from PHP...! from L30R3Y3S_BLOG"; ?>

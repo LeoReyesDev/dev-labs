@@ -1,0 +1,18 @@
+{
+  "template": "node",
+  "container": {
+    "port": "5174"
+  },
+  "tasks": {
+    "setup": "yarn install",
+    "start": "yarn dev"
+  },
+  "ports": {
+    "5173": {
+      "visibility": "public",
+      "protocol": "https",
+      "description": "Vue Cyberpunk App",
+      "onOpen": "open-preview"
+    }
+  }
+}

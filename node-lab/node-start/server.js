@@ -1,0 +1,6 @@
+import express from "express";
+const app = express();
+app.get("/", (req, res) =>
+  res.send("Hello World from NODE.JS...! from L30R3Y3S_BLOG"),
+);
+app.listen(3000, () => console.log("Running on http://localhost:3000"));

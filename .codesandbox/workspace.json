@@ -1,0 +1,17 @@
+{
+  "template": "node",
+  "workspace": {
+    "auto_start": true,
+    "default_preview_port": 5173,
+    "tasks": [
+      {
+        "id": "vue-starter-cyberpunk",
+        "name": "Vue Cyberpunk Lab",
+        "command": "cd vue-lab/vue-starter-cyberpunk && yarn dev",
+        "run_at_start": true,
+        "preview_port": 5173,
+        "is_default_preview": true
+      }
+    ]
+  }
+}
