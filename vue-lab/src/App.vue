@@ -1,1 +1,5 @@
-<template><h1 style="color:#42b883;">Hello World...! from L30R3Y3S_BLOG</h1></template><script setup></script>
+<template>
+  <h1 style="color: #42b883">Hello World...! from L30R3Y3S_BLOG</h1>
+</template>
+
+<script setup></script>
