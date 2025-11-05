@@ -1,0 +1,10 @@
+node_modules/
+dist/
+build/
+.vscode/
+.idea/
+__pycache__/
+*.log
+.env*
+vendor/
+uploads/

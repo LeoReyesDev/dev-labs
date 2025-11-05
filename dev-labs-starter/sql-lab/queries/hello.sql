@@ -1,0 +1,1 @@
+SELECT 'Hello World...! from L30R3Y3S_BLOG' AS greeting;
